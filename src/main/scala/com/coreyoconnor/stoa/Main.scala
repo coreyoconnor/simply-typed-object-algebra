@@ -5,6 +5,7 @@ import scalaz._, Scalaz._
 import scala.util.Try
 
 object Main {
+  import IntPrintExprs._
   import Print._
 
   def testTypes[Rep](implicit types: Types[Rep]): Seq[Rep] = {
@@ -77,9 +78,20 @@ object Main {
     }
   }
 
+  def testIntExprs[Rep](implicit exprs: IntExprs[Rep]): Seq[Rep] = {
+    testExprs(exprs)
+  }
+
+  def printTestIntExprs(): Unit = {
+    testIntExprs zip Stream.from(1) foreach { case (t: String, index) =>
+      println(index + ". " + t)
+    }
+  }
+
   def main(args: Array[String]) = {
     printTestTypes()
     printTestExprs()
     evalTestExprs()
+    printTestIntExprs()
   }
 }
