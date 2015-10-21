@@ -48,5 +48,20 @@ object DynEval {
     }
     def int  = int  => heap => IntVal(int)
     def bool = bool => heap => BoolVal(bool)
+    def LT   = left => right => heap => {
+      (left(heap), right(heap)) match {
+        case (IntVal(leftInt), IntVal(rightInt)) => BoolVal(leftInt < rightInt)
+      }
+    }
+    def EQ   = left => right => heap => {
+      (left(heap), right(heap)) match {
+        case (BoolVal(leftBool), BoolVal(rightBool)) => BoolVal(leftBool == rightBool)
+        case (IntVal(leftInt)  , IntVal(rightInt)  ) => BoolVal(leftInt == rightInt)
+      }
+    }
+    def IF = cond => ifTrue => ifElse => heap => cond(heap) match {
+      case BoolVal(true ) => ifTrue(heap)
+      case BoolVal(false) => ifElse(heap)
+    }
   }
 }
