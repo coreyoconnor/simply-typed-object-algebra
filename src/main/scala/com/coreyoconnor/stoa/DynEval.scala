@@ -23,7 +23,7 @@ object DynEval {
   type Heap = List[Val]
   type Eval = Heap => Val
 
-  implicit object EvalExprs extends Exprs[Eval] {
+  class EvalExprs extends Exprs[Eval] {
     type TypeRep = Type
     val types = new Types[Type] {
       def bool = BoolType()
@@ -48,6 +48,11 @@ object DynEval {
     }
     def int  = int  => heap => IntVal(int)
     def bool = bool => heap => BoolVal(bool)
+  }
+
+  implicit val EvalExprs: Exprs[Eval] = new EvalExprs
+
+  class IntEvalExprs extends EvalExprs with IntExprs[Eval] {
     def LT = left => right => heap => {
       (left(heap), right(heap)) match {
         case (IntVal(leftInt), IntVal(rightInt)) => BoolVal(leftInt < rightInt)
@@ -66,4 +71,6 @@ object DynEval {
       case BoolVal(false) => ifElse(heap)
     }
   }
+
+  implicit val IntEvalExprs: IntExprs[Eval] = new IntEvalExprs
 }

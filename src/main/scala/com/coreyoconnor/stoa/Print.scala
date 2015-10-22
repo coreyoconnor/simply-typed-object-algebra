@@ -15,10 +15,6 @@ object Print {
     def app = function => params => function + " " + params
     def int = int => int.toString
     def bool = bool => bool.toString
-    def LT = left => right => left + " < " + right
-    def EQ = left => right => left + " == " + right
-    def IF = cond => ifTrue => ifFalse =>
-      "if (" + cond + ") { " + ifTrue + " } else { " + ifFalse + " }"
   }
 
   implicit val PrintExprs: Exprs[String] = new PrintExprs

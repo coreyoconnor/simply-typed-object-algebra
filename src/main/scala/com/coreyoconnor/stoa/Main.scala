@@ -42,21 +42,6 @@ object Main {
         }
       } {
         abs(types.bool)(ref(0))
-      },
-      IF(bool(false)) {
-        ref(0)
-      } {
-        int(42)
-      },
-      IF(LT(int(42))(int(256))) {
-        idBool(bool(true))
-      } {
-        abs(types.function(types.int)(types.bool))(bool(true))
-      },
-      IF(EQ(LT(int(42))(int(256)))(bool(true))) {
-        idBool(bool(true))
-      } {
-        abs(types.function(types.int)(types.bool))(bool(true))
       }
     )
   }
@@ -79,7 +64,27 @@ object Main {
   }
 
   def testIntExprs[Rep](implicit exprs: IntExprs[Rep]): Seq[Rep] = {
-    testExprs(exprs)
+    import exprs._
+
+    val idBool = app(abs(types.bool)(ref(0)))
+
+    testExprs(exprs) ++ Seq(
+      IF(bool(false)) {
+        ref(0)
+      } {
+        int(42)
+      },
+      IF(LT(int(42))(int(256))) {
+        idBool(bool(true))
+      } {
+        abs(types.function(types.int)(types.bool))(bool(true))
+      },
+      IF(EQ(LT(int(42))(int(256)))(bool(true))) {
+        idBool(bool(true))
+      } {
+        abs(types.function(types.int)(types.bool))(bool(true))
+      }
+    )
   }
 
   def printTestIntExprs(): Unit = {
