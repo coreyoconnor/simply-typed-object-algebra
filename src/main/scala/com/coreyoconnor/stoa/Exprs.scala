@@ -1,6 +1,6 @@
 package com.coreyoconnor.stoa
 
-trait Expr[Rep] {
+trait Exprs[Rep] {
   type TypeRep
   val types: Types[TypeRep]
   def ref: Int => Rep

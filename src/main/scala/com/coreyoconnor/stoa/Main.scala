@@ -24,7 +24,7 @@ object Main {
     }
   }
 
-  def testExprs[Rep](implicit expr: Expr[Rep]): Seq[Rep] = {
+  def testExprs[Rep](implicit expr: Exprs[Rep]): Seq[Rep] = {
     import expr._
 
     val idBool = app(abs(types.bool)(ref(0)))

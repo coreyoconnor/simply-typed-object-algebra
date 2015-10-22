@@ -7,7 +7,7 @@ object Print {
     def function = a => b => "(" + a + " => " + b + ")"
   }
 
-  class PrintExpr extends Expr[String] {
+  class PrintExprs extends Exprs[String] {
     type TypeRep = String
     val types = implicitly[Types[TypeRep]]
     def ref = index => "(var " + index.toString + ")"
@@ -21,5 +21,5 @@ object Print {
       "if (" + cond + ") { " + ifTrue + " } else { " + ifFalse + " }"
   }
 
-  implicit val PrintExpr: Expr[String] = new PrintExpr
+  implicit val PrintExprs: Exprs[String] = new PrintExprs
 }

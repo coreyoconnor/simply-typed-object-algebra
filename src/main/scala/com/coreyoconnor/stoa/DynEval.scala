@@ -23,7 +23,7 @@ object DynEval {
   type Heap = List[Val]
   type Eval = Heap => Val
 
-  implicit object EvalExpr extends Expr[Eval] {
+  implicit object EvalExprs extends Exprs[Eval] {
     type TypeRep = Type
     val types = new Types[Type] {
       def bool = BoolType()
@@ -48,15 +48,17 @@ object DynEval {
     }
     def int  = int  => heap => IntVal(int)
     def bool = bool => heap => BoolVal(bool)
-    def LT   = left => right => heap => {
+    def LT = left => right => heap => {
       (left(heap), right(heap)) match {
         case (IntVal(leftInt), IntVal(rightInt)) => BoolVal(leftInt < rightInt)
+        case _ => sys.error("type mismatch: LT must be applied to int values only.")
       }
     }
-    def EQ   = left => right => heap => {
+    def EQ = left => right => heap => {
       (left(heap), right(heap)) match {
         case (BoolVal(leftBool), BoolVal(rightBool)) => BoolVal(leftBool == rightBool)
         case (IntVal(leftInt)  , IntVal(rightInt)  ) => BoolVal(leftInt == rightInt)
+          case _ => sys.error("type mismatch: EQ must be applied to two expressions of the same type.")
       }
     }
     def IF = cond => ifTrue => ifElse => heap => cond(heap) match {
