@@ -52,7 +52,7 @@ object DynEval {
 
   implicit val EvalExprs: Exprs[Eval] = new EvalExprs
 
-  class IntEvalExprs extends EvalExprs with IntExprs[Eval] {
+  class CondEvalExprs extends EvalExprs with CondExprs[Eval] {
     def LT = left => right => heap => {
       (left(heap), right(heap)) match {
         case (IntVal(leftInt), IntVal(rightInt)) => BoolVal(leftInt < rightInt)
@@ -72,5 +72,5 @@ object DynEval {
     }
   }
 
-  implicit val IntEvalExprs: IntExprs[Eval] = new IntEvalExprs
+  implicit val CondEvalExprs: CondExprs[Eval] = new CondEvalExprs
 }

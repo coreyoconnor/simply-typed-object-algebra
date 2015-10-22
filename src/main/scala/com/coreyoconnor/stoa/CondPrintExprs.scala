@@ -1,12 +1,12 @@
 package com.coreyoconnor.stoa
 
-object IntPrintExprs {
+object CondPrintExprs {
   import Print._
-  class IntPrintExprs extends PrintExprs with IntExprs[String] {
+  class CondPrintExprs extends PrintExprs with CondExprs[String] {
     def LT = left => right => left + " < " + right
     def EQ = left => right => left + " == " + right
     def IF = cond => ifTrue => ifFalse =>
       "if (" + cond + ") { " + ifTrue + " } else { " + ifFalse + " }"
   }
-  implicit val IntPrintExprs: IntExprs[String] = new IntPrintExprs
+  implicit val CondPrintExprs: CondExprs[String] = new CondPrintExprs
 }

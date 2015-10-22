@@ -5,7 +5,7 @@ import scalaz._, Scalaz._
 import scala.util.Try
 
 object Main {
-  import IntPrintExprs._
+  import CondPrintExprs._
   import Print._
 
   def testTypes[Rep](implicit types: Types[Rep]): Seq[Rep] = {
@@ -63,7 +63,7 @@ object Main {
     }
   }
 
-  def testIntExprs[Rep](implicit exprs: IntExprs[Rep]): Seq[Rep] = {
+  def testCondExprs[Rep](implicit exprs: CondExprs[Rep]): Seq[Rep] = {
     import exprs._
 
     val idBool = app(abs(types.bool)(ref(0)))
@@ -87,8 +87,8 @@ object Main {
     )
   }
 
-  def printTestIntExprs(): Unit = {
-    testIntExprs zip Stream.from(1) foreach { case (t: String, index) =>
+  def printTestCondExprs(): Unit = {
+    testCondExprs zip Stream.from(1) foreach { case (t: String, index) =>
       println(index + ". " + t)
     }
   }
@@ -97,6 +97,6 @@ object Main {
     printTestTypes()
     printTestExprs()
     evalTestExprs()
-    printTestIntExprs()
+    printTestCondExprs()
   }
 }
